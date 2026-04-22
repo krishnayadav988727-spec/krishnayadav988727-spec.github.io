@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+  <title>Buy · EstateFlow — Homes for sale</title>
+  <!-- Font Awesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- Google Fonts: Inter -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #fafbfc;
+      color: #1e1f2a;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: #1e1f2a;
+      color: white;
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 12px 24px;
+      border-radius: 60px;
+      text-decoration: none;
+      transition: all 0.2s;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+      gap: 8px;
+      white-space: nowrap;
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: #1e1f2a;
+      border: 1.5px solid #e2e4e9;
+      box-shadow: none;
+    }
+
+    .btn-outline:hover {
+      background: #1e1f2a;
+      color: white;
+      border-color: #1e1f2a;
+    }
+
+    .btn-sm {
+      padding: 8px 16px;
+      font-size: 0.85rem;
+    }
+
+    .btn i { font-size: 1.1em; }
+
+    /* header */
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 0;
+      border-bottom: 1px solid #eef0f3;
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      font-weight: 700;
+      font-size: 1.7rem;
+      letter-spacing: -0.5px;
+      color: #1e1f2a;
+    }
+    .logo i { color: #2563eb; margin-right: 6px; }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      font-weight: 500;
+      align-items: center;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: #2c2e3e;
+      font-size: 1rem;
+    }
+    .nav-links a:hover { color: #2563eb; }
+    .nav-links a.active { color: #2563eb; font-weight: 600; }
+
+    .nav-actions {
+      display: flex;
+      gap: 12px;
+    }
+
+    /* mobile menu button */
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: 1.5px solid #e2e4e9;
+      font-size: 1.5rem;
+      width: 44px;
+      height: 44px;
+      border-radius: 50px;
+      align-items: center;
+      justify-content: center;
+      color: #1e1f2a;
+      cursor: pointer;
+    }
+
+    /* Hero (buy specific) */
+    .hero {
+      padding: 40px 0 30px;
+      text-align: center;
+    }
+    .hero h1 {
+      font-size: clamp(2rem, 6vw, 3rem);
+      font-weight: 700;
+      letter-spacing: -1px;
+      margin-bottom: 12px;
+    }
+    .hero p {
+      font-size: 1.1rem;
+      color: #5b5f71;
+      max-width: 600px;
+      margin: 0 auto 24px;
+    }
+
+    /* search bar */
+    .search-wrapper {
+      background: white;
+      border-radius: 80px;
+      padding: 8px 8px 8px 20px;
+      box-shadow: 0 18px 35px -8px rgba(0,0,0,0.08);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      max-width: 920px;
+      margin: 0 auto;
+      border: 1px solid #eef0f3;
+    }
+    .search-field {
+      display: flex;
+      align-items: center;
+      flex: 1 1 180px;
+      padding: 8px 10px;
+      border-right: 1px solid #e2e6ea;
+    }
+    .search-field i {
+      color: #2563eb;
+      margin-right: 10px;
+      font-size: 1.1rem;
+    }
+    .search-field select, .search-field input {
+      border: none;
+      background: transparent;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      width: 100%;
+      outline: none;
+    }
+    .search-btn {
+      background: #2563eb;
+      color: white;
+      border: none;
+      padding: 16px 32px;
+      border-radius: 60px;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.2s;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .search-btn:hover { background: #1d4ed8; }
+
+    /* filter bar */
+    .filters-bar {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin: 25px 0 20px;
+      justify-content: center;
+    }
+    .filter-chip {
+      background: white;
+      border: 1px solid #dee4ed;
+      padding: 8px 22px;
+      border-radius: 40px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .filter-chip.active {
+      background: #1e1f2a;
+      color: white;
+      border-color: #1e1f2a;
+    }
+
+    /* stats / count */
+    .result-stats {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 10px 0 20px;
+      color: #5b5f71;
+    }
+    .sort-select {
+      padding: 8px 16px;
+      border-radius: 40px;
+      border: 1px solid #dee4ed;
+      background: white;
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* property grid */
+    .property-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+    .property-card {
+      background: white;
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.02);
+      transition: all 0.2s;
+      border: 1px solid #edf0f5;
+      display: flex;
+      flex-direction: column;
+    }
+    .property-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 30px -8px rgba(0,0,0,0.08);
+      border-color: #d0d9e8;
+    }
+    .card-img {
+      position: relative;
+      height: 190px;
+      background: #d4dce8;
+    }
+    .card-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .property-badge {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      background: #1e1f2a;
+      color: white;
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 5px 12px;
+      border-radius: 40px;
+    }
+    .wishlist-btn {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      background: white;
+      border: none;
+      width: 38px;
+      height: 38px;
+      border-radius: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #5f6b7a;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+      transition: 0.15s;
+      font-size: 1.1rem;
+    }
+    .wishlist-btn:hover { color: #e03a3a; }
+    .wishlist-btn.active { color: #e03a3a; }
+    .wishlist-btn.active i { font-weight: 900; }
+
+    .card-content {
+      padding: 18px 16px 20px;
+      flex: 1;
+    }
+    .price {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #1e1f2a;
+      margin-bottom: 4px;
+    }
+    .price span { font-size: 0.8rem; font-weight: 400; color: #6c7583; }
+    .property-title {
+      font-weight: 600;
+      font-size: 1.05rem;
+      margin-bottom: 6px;
+    }
+    .property-location {
+      color: #6c7583;
+      font-size: 0.85rem;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .property-features {
+      display: flex;
+      gap: 14px;
+      border-top: 1px solid #eef2f6;
+      padding-top: 14px;
+      color: #3f4552;
+      font-size: 0.85rem;
+      flex-wrap: wrap;
+    }
+    .property-features span i { margin-right: 5px; color: #2563eb; }
+
+    /* CTA & footer */
+    .cta-box {
+      background: #1e1f2a;
+      border-radius: 40px;
+      padding: 50px 30px;
+      margin: 50px 0 40px;
+      color: white;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 25px;
+    }
+    .cta-box h3 { font-size: 1.9rem; font-weight: 700; }
+    .cta-box .btn { background: white; color: #1e1f2a; }
+    .cta-box .btn-outline { color: white; border-color: rgba(255,255,255,0.3); }
+
+    footer {
+      border-top: 1px solid #e2e8f0;
+      padding: 40px 0 30px;
+      color: #5f6b7a;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 30px;
+      margin-bottom: 30px;
+    }
+
+    /* toast */
+    .demo-toast {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #1e1f2a;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 60px;
+      font-size: 0.9rem;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      z-index: 1000;
+      opacity: 0;
+      transition: opacity 0.2s;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+    .demo-toast.show { opacity: 1; }
+
+    /* responsive */
+    @media (max-width: 760px) {
+      .container { padding: 0 16px; }
+      .menu-toggle { display: flex; order: 3; }
+      .nav-links {
+        display: none;
+        width: 100%;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+        padding: 20px 0 8px;
+        order: 4;
+      }
+      .nav-links.show { display: flex; }
+      .nav-actions { margin-left: auto; margin-right: 12px; }
+      .logo { font-size: 1.5rem; }
+
+      .search-wrapper {
+        flex-direction: column;
+        background: transparent;
+        box-shadow: none;
+        padding: 0;
+        border: none;
+        gap: 10px;
+      }
+      .search-field {
+        background: white;
+        border-radius: 60px;
+        width: 100%;
+        border: 1px solid #e2e6ea;
+        padding: 12px 18px;
+        border-right: none;
+      }
+      .search-btn { width: 100%; justify-content: center; padding: 16px; }
+      .hero { padding: 20px 0; }
+      .result-stats { flex-direction: column; align-items: flex-start; gap: 10px; }
+    }
+
+    button, .btn, .filter-chip, .wishlist-btn { touch-action: manipulation; }
+  </style>
+</head>
+<body>
+
+<!-- Toast -->
+<div id="demoToast" class="demo-toast">✨ Demo interaction</div>
+
+<!-- HEADER -->
+<header>
+  <div class="container">
+    <div class="navbar">
+      <div class="logo">
+        <i class="fas fa-building"></i> EstateFlow
+      </div>
+      <button class="menu-toggle" id="menuToggle" aria-label="Menu">
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="nav-links" id="navLinks">
+        <a href="index.html">Buy</a> <!-- will be active on buy page, we can set via class -->
+        <a href="#" class="demo-link">Rent</a>
+        <a href="#" class="demo-link">Sell</a>
+        <a href="#" class="demo-link">Agents</a>
+        <a href="#" class="demo-link">Insights</a>
+      </div>
+      <div class="nav-actions">
+        <a href="#" class="btn-outline btn-sm demo-link"><i class="far fa-heart"></i> Saved</a>
+        <a href="#" class="btn btn-sm demo-link"><i class="far fa-user"></i> Sign in</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="container">
+    <!-- HERO for buy page -->
+    <section class="hero">
+      <h1>Homes for sale · find your perfect match</h1>
+      <p>Browse verified listings, connect with agents, and schedule tours.</p>
+
+      <!-- search component (buy focused) -->
+      <div class="search-wrapper">
+        <div class="search-field">
+          <i class="fas fa-map-pin"></i>
+          <input type="text" id="searchLocation" placeholder="City, neighborhood, or ZIP" value="Mumbai">
+        </div>
+        <div class="search-field">
+          <i class="fas fa-home"></i>
+          <select id="searchType">
+            <option value="any">All property types</option>
+            <option value="Apartment">Apartment</option>
+            <option value="Villa">Villa</option>
+            <option value="House">House</option>
+            <option value="Office">Office</option>
+          </select>
+        </div>
+        <div class="search-field">
+          <i class="fas fa-tag"></i>
+          <select id="searchPrice">
+            <option value="any">Any price</option>
+            <option value="0-20000000">Under ₹2 Cr</option>
+            <option value="20000000-50000000">₹2 Cr – ₹5 Cr</option>
+            <option value="50000000-100000000">₹5 Cr+</option>
+          </select>
+        </div>
+        <button class="search-btn" id="searchButton"><i class="fas fa-search"></i> Search</button>
+      </div>
+    </section>
+
+    <!-- Filter chips (quick type filters) -->
+    <div class="filters-bar" id="filterBar">
+      <span class="filter-chip active" data-filter="all">All for sale</span>
+      <span class="filter-chip" data-filter="House">Houses</span>
+      <span class="filter-chip" data-filter="Apartment">Apartments</span>
+      <span class="filter-chip" data-filter="Villa">Villas</span>
+      <span class="filter-chip" data-filter="Office">Commercial</span>
+    </div>
+
+    <!-- Results stats & sort (demo) -->
+    <div class="result-stats">
+      <span id="resultCount">6 properties for sale</span>
+      <select class="sort-select" id="sortSelect">
+        <option value="default">Newest</option>
+        <option value="price_low">Price: Low to High</option>
+        <option value="price_high">Price: High to Low</option>
+      </select>
+    </div>
+
+    <!-- Property Grid (dynamic) -->
+    <div class="property-grid" id="propertyGrid"></div>
+
+    <!-- CTA -->
+    <div class="cta-box">
+      <div>
+        <h3>Can't find what you need?</h3>
+        <p style="opacity:0.9;">Let our experts help you discover off‑market opportunities.</p>
+      </div>
+      <div style="display: flex; gap: 12px;">
+        <a href="#" class="btn demo-link" style="background:white; color:#1e1f2a;"><i class="fas fa-headset"></i> Talk to an agent</a>
+        <a href="#" class="btn-outline demo-link" style="color:white; border-color:rgba(255,255,255,0.3);">Save search</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div><strong>EstateFlow</strong><br>© 2026</div>
+      <div><strong>Buy</strong><br><a href="#" class="demo-link" style="color:inherit;">Homes for sale</a><br><a href="#" class="demo-link" style="color:inherit;">Open houses</a></div>
+      <div><strong>Rent</strong><br><a href="#" class="demo-link" style="color:inherit;">Apartments</a><br><a href="#" class="demo-link" style="color:inherit;">Houses</a></div>
+      <div><strong>Support</strong><br><a href="#" class="demo-link" style="color:inherit;">Help center</a><br><a href="#" class="demo-link" style="color:inherit;">Contact</a></div>
+    </div>
+    <p style="margin-top:20px;"><i class="far fa-copyright"></i> 2026 EstateFlow — buy page demo · all interactive</p>
+  </div>
+</footer>
+
+<script>
+  (function(){
+    "use strict";
+
+    // ---------- DUMMY DATA (same as homepage, extended) ----------
+    const properties = [
+      { id:1, title:"Luxury Penthouse with Skyline View", location:"Bandra West, Mumbai", price:42500000, priceFormatted:"₹4.25 Cr", beds:4, baths:4, sqft:3200, type:"Apartment", img:"https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg?auto=compress&cs=tinysrgb&w=600", badge:"Featured", featured:true },
+      { id:2, title:"Modern Villa with Pool & Garden", location:"Jubilee Hills, Hyderabad", price:89000000, priceFormatted:"₹8.9 Cr", beds:6, baths:5, sqft:5200, type:"Villa", img:"https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=600", badge:"Luxury", featured:true },
+      { id:3, title:"2 BHK Designer Apartment", location:"Koramangala, Bangalore", price:12500000, priceFormatted:"₹1.25 Cr", beds:2, baths:2, sqft:1350, type:"Apartment", img:"https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg?auto=compress&cs=tinysrgb&w=600", badge:"Ready to move", featured:false },
+      { id:4, title:"Independent House in GK II", location:"Greater Kailash, Delhi", price:53000000, priceFormatted:"₹5.3 Cr", beds:4, baths:3, sqft:2600, type:"House", img:"https://images.pexels.com/photos/280229/pexels-photo-280229.jpeg?auto=compress&cs=tinysrgb&w=600", badge:"Corner plot", featured:true },
+      { id:5, title:"Sea Facing 3 BHK", location:"Marine Drive, Mumbai", price:78000000, priceFormatted:"₹7.8 Cr", beds:3, baths:3, sqft:2100, type:"Apartment", img:"https://images.pexels.com/photos/1643389/pexels-photo-1643389.jpeg?auto=compress&cs=tinysrgb&w=600", badge:"Exclusive", featured:false },
+      { id:6, title:"Smart Office Space", location:"Cybercity, Gurgaon", price:21000000, priceFormatted:"₹2.1 Cr", beds:null, baths:2, sqft:1800, type:"Office", img:"https://images.pexels.com/photos/271624/pexels-photo-271624.jpeg?auto=compress&cs=tinysrgb&w=600", badge:"Commercial", featured:false },
+      { id:7, title:"Cozy Studio in Indiranagar", location:"Indiranagar, Bangalore", price:8500000, priceFormatted:"₹85 L", beds:1, baths:1, sqft:650, type:"Apartment", img:"https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg?auto=compress&cs=tinysrgb&w=600", badge:"Budget", featured:false },
+      { id:8, title:"Spacious 4 BHK Villa", location:"Whitefield, Bangalore", price:36000000, priceFormatted:"₹3.6 Cr", beds:4, baths:4, sqft:2800, type:"Villa", img:"https://images.pexels.com/photos/258154/pexels-photo-258154.jpeg?auto=compress&cs=tinysrgb&w=600", badge:"Garden", featured:false }
+    ];
+
+    // DOM elements
+    const grid = document.getElementById('propertyGrid');
+    const searchBtn = document.getElementById('searchButton');
+    const locationInput = document.getElementById('searchLocation');
+    const typeSelect = document.getElementById('searchType');
+    const priceSelect = document.getElementById('searchPrice');
+    const filterChips = document.querySelectorAll('.filter-chip');
+    const resultCountSpan = document.getElementById('resultCount');
+    const sortSelect = document.getElementById('sortSelect');
+    const toast = document.getElementById('demoToast');
+
+    let currentFiltered = [...properties];
+
+    // Helper toast
+    function showToast(msg) {
+      toast.textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1500);
+    }
+
+    // Render card
+    function renderPropertyCard(prop) {
+      const bedText = prop.beds ? `${prop.beds} bed${prop.beds>1?'s':''}` : 'Office';
+      const bathText = prop.baths ? `${prop.baths} bath${prop.baths>1?'s':''}` : '—';
+      return `
+        <div class="property-card" data-id="${prop.id}">
+          <div class="card-img">
+            <img src="${prop.img}" alt="${prop.title}" loading="lazy">
+            <span class="property-badge">${prop.badge || prop.type}</span>
+            <button class="wishlist-btn" data-id="${prop.id}" aria-label="Save"><i class="far fa-heart"></i></button>
+          </div>
+          <div class="card-content">
+            <div class="price">${prop.priceFormatted} <span>+ fees</span></div>
+            <div class="property-title">${prop.title}</div>
+            <div class="property-location"><i class="fas fa-map-marker-alt"></i> ${prop.location}</div>
+            <div class="property-features">
+              <span><i class="fas fa-bed"></i> ${bedText}</span>
+              <span><i class="fas fa-bath"></i> ${bathText}</span>
+              <span><i class="fas fa-vector-square"></i> ${prop.sqft} sqft</span>
+            </div>
+          </div>
+        </div>`;
+    }
+
+    // Attach wishlist events
+    function attachWishlist() {
+      document.querySelectorAll('.wishlist-btn').forEach(btn => {
+        btn.removeEventListener('click', handleWishlist);
+        btn.addEventListener('click', handleWishlist);
+      });
+    }
+    function handleWishlist(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      const btn = e.currentTarget;
+      const icon = btn.querySelector('i');
+      if (icon.classList.contains('far')) {
+        icon.classList.remove('far');
+        icon.classList.add('fas');
+        btn.classList.add('active');
+        showToast('❤️ Added to saved');
+      } else {
+        icon.classList.remove('fas');
+        icon.classList.add('far');
+        btn.classList.remove('active');
+        showToast('Removed from saved');
+      }
+    }
+
+    // Sort function
+    function sortProperties(arr, sortBy) {
+      const sorted = [...arr];
+      if (sortBy === 'price_low') {
+        sorted.sort((a,b) => a.price - b.price);
+      } else if (sortBy === 'price_high') {
+        sorted.sort((a,b) => b.price - a.price);
+      }
+      // default: keep original order (newest first, by id desc maybe)
+      return sorted;
+    }
+
+    // Main filter + render
+    function filterAndRender() {
+      let filtered = [...properties];
+
+      // location filter
+      const locQuery = locationInput.value.trim().toLowerCase();
+      if (locQuery) {
+        filtered = filtered.filter(p => p.location.toLowerCase().includes(locQuery));
+      }
+
+      // type filter from select
+      const typeVal = typeSelect.value;
+      if (typeVal !== 'any') {
+        filtered = filtered.filter(p => p.type === typeVal);
+      }
+
+      // price filter
+      const priceVal = priceSelect.value;
+      if (priceVal !== 'any') {
+        const [min, max] = priceVal.split('-').map(Number);
+        filtered = filtered.filter(p => p.price >= min && p.price <= max);
+      }
+
+      // active chip filter (if not 'all')
+      const activeChip = document.querySelector('.filter-chip.active');
+      if (activeChip) {
+        const chipFilter = activeChip.dataset.filter;
+        if (chipFilter && chipFilter !== 'all') {
+          filtered = filtered.filter(p => p.type === chipFilter);
+        }
+      }
+
+      // sorting
+      const sortBy = sortSelect.value;
+      filtered = sortProperties(filtered, sortBy);
+
+      currentFiltered = filtered;
+      
+      // render
+      if (filtered.length === 0) {
+        grid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:40px;">No properties match. Try adjusting filters.</div>`;
+        resultCountSpan.textContent = `0 properties found`;
+      } else {
+        grid.innerHTML = filtered.map(p => renderPropertyCard(p)).join('');
+        resultCountSpan.textContent = `${filtered.length} propert${filtered.length === 1 ? 'y' : 'ies'} for sale`;
+      }
+      
+      attachWishlist();
+    }
+
+    // Initial render
+    filterAndRender();
+
+    // Event listeners
+    searchBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      filterAndRender();
+      showToast('🔍 Search updated');
+    });
+
+    locationInput.addEventListener('keypress', (e) => {
+      if(e.key === 'Enter') {
+        e.preventDefault();
+        filterAndRender();
+        showToast('🔍 Searching...');
+      }
+    });
+
+    // Filter chips
+    filterChips.forEach(chip => {
+      chip.addEventListener('click', function() {
+        filterChips.forEach(c => c.classList.remove('active'));
+        this.classList.add('active');
+        filterAndRender();
+        showToast(`Filter: ${this.textContent}`);
+      });
+    });
+
+    // Sort select
+    sortSelect.addEventListener('change', () => {
+      filterAndRender();
+      showToast('Sorted ' + sortSelect.options[sortSelect.selectedIndex].text);
+    });
+
+    // Type/price selects also trigger on change (no need extra button)
+    typeSelect.addEventListener('change', filterAndRender);
+    priceSelect.addEventListener('change', filterAndRender);
+
+    // Mobile menu toggle
+    const menuToggle = document.getElementById('menuToggle');
+    const navLinks = document.getElementById('navLinks');
+    menuToggle.addEventListener('click', () => {
+      navLinks.classList.toggle('show');
+      const icon = menuToggle.querySelector('i');
+      icon.classList.toggle('fa-bars');
+      icon.classList.toggle('fa-times');
+    });
+
+    // Close menu on link click (mobile)
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', () => {
+        if (window.innerWidth <= 760) {
+          navLinks.classList.remove('show');
+          menuToggle.querySelector('i').classList.add('fa-bars');
+          menuToggle.querySelector('i').classList.remove('fa-times');
+        }
+      });
+    });
+
+    // Demo links toast
+    document.querySelectorAll('.demo-link').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        showToast('📄 Demo: this link would navigate');
+      });
+    });
+
+    // Card click (detail view demo)
+    document.addEventListener('click', (e) => {
+      const card = e.target.closest('.property-card');
+      if (card && !e.target.closest('.wishlist-btn')) {
+        const title = card.querySelector('.property-title')?.textContent || 'Property';
+        showToast(`🏠 ${title} (demo detail view)`);
+      }
+    });
+
+    // Highlight "Buy" in nav if index.html exists, but for demo we set active manually via JS
+    const buyLink = document.querySelector('.nav-links a[href="index.html"]');
+    if(buyLink) buyLink.classList.add('active');
+    
+    // window resize menu reset
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 760) {
+        navLinks.classList.remove('show');
+        const icon = menuToggle.querySelector('i');
+        icon.classList.add('fa-bars');
+        icon.classList.remove('fa-times');
+      }
+    });
+
+  })();
+</script>
+<noscript>Please enable JavaScript for interactive filters.</noscript>
+</body>
+</html>
